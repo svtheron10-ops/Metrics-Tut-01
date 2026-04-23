@@ -3,7 +3,8 @@
 This tutorial generates two figures related to government debt and its
 relation to real GDP growth. The figures are created for BRICS (Brazil,
 Russia, India, China and South Africa). All data is sourced from the
-FRED API.
+FRED API. All the code to recreate the results is displayed in this
+README, but reproduction will require setting your own API key.
 
 # Set-up
 
@@ -32,7 +33,8 @@ gdp_zaf <- fredr(series_id = "NGDPRXDCZAA", observation_start = start_date)
 
 # Formatting
 
-Combining data
+In order to ready the data for merging and variable creation, I first
+combined the debt and gdp data.
 
 ``` r
 # Combining the debt data for each country
@@ -58,7 +60,7 @@ gdp_panel <- bind_rows(
   rename(gdp = value)
 ```
 
-Calculating GDP growth
+Them, I calculated GDP growth as follows:
 
 ``` r
 gdp_growth_panel <- gdp_panel |> 
@@ -69,7 +71,7 @@ gdp_growth_panel <- gdp_panel |>
   ungroup()
 ```
 
-Merging the data
+Then, I merged all the data into a combined panel.
 
 ``` r
 # data is merged with a left_join
@@ -91,6 +93,7 @@ brics |>
   ) +
   geom_line() +
   labs(
+    title = "Gross Debt (% of GDP) for BRICS Countries from 2000-2024",
     x = NULL,
     y = "debt as a % of GDP"
   ) +
@@ -99,7 +102,7 @@ brics |>
 
 ![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
-## The Relationship Between Debt & GDP Growth
+## The Relationship Between Debt & GDP Growth for BRICS Countries
 
 ``` r
 brics |> 
@@ -109,6 +112,7 @@ brics |>
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   labs(
+    title = "Gross Debt (% of GDP) vs Real GDP Growth",
     x = "debt as a % of GDP",
     y = "Real GDP Growth"
   ) +
