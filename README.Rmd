@@ -110,6 +110,8 @@ brics <- debt_panel |>
 
 ## General Government Gross Debt (% of GDP) for BRICS Countries
 
+This figure illustrates that most of the BRICS countries have experienced a rise in government debt as a percentage of GDP since 2000. Russia appears to be the only country bucking this trend, although it too has seen a growth in debt since 2010. All countries experienced a upward spike in debt during the COVID-19 pandemic. 
+
 ```{r}
 brics |> 
   ggplot(
@@ -125,6 +127,8 @@ brics |>
 ```
 
 ## The Relationship Between Debt & GDP Growth for BRICS Countries
+
+This figure illustrates the relationship between government debt as a percentage of GDP and real GDP growth. Nearly all countries exhibit a negative relationship between government debt and GDP growth, except for Russia.
 
 ```{r, warning=FALSE}
 brics |> 
