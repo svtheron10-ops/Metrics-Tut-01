@@ -1,36 +1,13 @@
-``` r
-knitr::opts_chunk$set(message = FALSE)
-
-rm(list = ls()) # Clean your environment:
-gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
-```
-
     ##           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-    ## Ncells  558034 29.9    1236560 66.1         NA   715645 38.3
-    ## Vcells 1067757  8.2    8388608 64.0      16384  2010425 15.4
-
-``` r
-library(tidyverse)
-library(fredr)
-fredr_set_key("f287f35d692bc08c79b8d88c6ee3ba2d")
-list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
-library(fmxdat)
-library(dplyr)
-library(tidyr)
-library(arrow)
-library(readr)
-library(janitor)
-library(purrr)
-library(pacman)
-library(rmsfuns)
-library(purrr)
-library(broom)
-library(fredr)
-```
+    ## Ncells  558040 29.9    1236577 66.1         NA   715645 38.3
+    ## Vcells 1067816  8.2    8388608 64.0      16384  2010425 15.4
 
 # Purpose
 
-This tutorial will…
+This tutorial generates two figures related to government debt and its
+relation to real GDP growth. The figures are created for BRICS (Brazil,
+Russia, India, China and South Africa). All data is sourced from the
+FRED API.
 
 # Set-up
 
@@ -91,14 +68,15 @@ Calculating GDP growth
 gdp_growth_panel <- gdp_panel |> 
   group_by(country) |> 
   mutate(
-    gdp_growth = (gdp/lag(gdp) - 1) * 100
+    gdp_growth = (gdp/lag(gdp) - 1) * 100 # gdp growth is calculated as a percentage
   )|> 
   ungroup()
 ```
 
-Merging all the data
+Merging the data
 
 ``` r
+# data is merged with a left_join
 brics <- debt_panel |>
   left_join(
     gdp_growth_panel, 
@@ -140,11 +118,5 @@ brics |>
   ) +
   theme_minimal()
 ```
-
-    ## Warning: Removed 21 rows containing non-finite outside the scale range
-    ## (`stat_smooth()`).
-
-    ## Warning: Removed 21 rows containing missing values or values outside the scale range
-    ## (`geom_point()`).
 
 ![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)

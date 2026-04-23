@@ -4,12 +4,12 @@ output:
     variant: markdown_github
 ---
 
-```{r, message=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 knitr::opts_chunk$set(message = FALSE)
 
-rm(list = ls()) # Clean your environment:
-gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
+rm(list = ls()) # Cleaning the environment
+gc() # garbage collection
 library(tidyverse)
 library(fredr)
 fredr_set_key("f287f35d692bc08c79b8d88c6ee3ba2d")
@@ -30,7 +30,7 @@ library(fredr)
 
 # Purpose
 
-This tutorial will...
+This tutorial generates two figures related to government debt and its relation to real GDP growth. The figures are created for BRICS (Brazil, Russia, India, China and South Africa). All data is sourced from the FRED API. 
 
 # Set-up
 
@@ -91,14 +91,15 @@ Calculating GDP growth
 gdp_growth_panel <- gdp_panel |> 
   group_by(country) |> 
   mutate(
-    gdp_growth = (gdp/lag(gdp) - 1) * 100
+    gdp_growth = (gdp/lag(gdp) - 1) * 100 # gdp growth is calculated as a percentage
   )|> 
   ungroup()
 ```
 
-Merging all the data
+Merging the data
 
 ```{r}
+# data is merged with a left_join
 brics <- debt_panel |>
   left_join(
     gdp_growth_panel, 
@@ -125,7 +126,7 @@ brics |>
 
 ## The Relationship Between Debt & GDP Growth
 
-```{r}
+```{r, warning=FALSE}
 brics |> 
   ggplot(
     aes(x = debt_gdp, y = gdp_growth, colour = country)
