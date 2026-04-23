@@ -1,7 +1,3 @@
-    ##           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-    ## Ncells  558040 29.9    1236577 66.1         NA   715645 38.3
-    ## Vcells 1067816  8.2    8388608 64.0      16384  2010425 15.4
-
 # Purpose
 
 This tutorial generates two figures related to government debt and its
